@@ -83,6 +83,18 @@
       opacity: 0.85;
     }
 
+    /* Confetti Overlay */
+    .confetti-svg {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      opacity: 0.8;
+      z-index: 0;
+    }
+
     /* Color Palette Dots */
     .color-palette {
       position: absolute;
@@ -378,6 +390,26 @@
     
     <!-- TOP LEFT QUADRANT -->
     <div class="top-left">
+      <!-- Confetti SVG -->
+      <svg class="confetti-svg" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Squiggles -->
+        <path d="M20 20 Q 30 10 40 25 T 60 20" stroke="#C88642" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <path d="M150 40 Q 160 30 170 50 T 190 35" stroke="#AEC5CC" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <path d="M80 120 Q 90 110 100 130 T 120 120" stroke="#7B4B36" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <!-- Stars/Crosses -->
+        <path d="M40 80 L 50 90 M 40 90 L 50 80" stroke="#BDB3A6" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M130 80 L 140 90 M 130 90 L 140 80" stroke="#C88642" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Solid Dots -->
+        <circle cx="90" cy="40" r="3" fill="#BDB3A6"/>
+        <circle cx="30" cy="110" r="4" fill="#AEC5CC"/>
+        <circle cx="160" cy="110" r="3" fill="#7B4B36"/>
+        <circle cx="110" cy="80" r="4" fill="#C88642"/>
+        <circle cx="60" cy="50" r="3" fill="#AEC5CC"/>
+        <!-- Outlined Circles -->
+        <circle cx="120" cy="20" r="4" stroke="#7B4B36" stroke-width="2" fill="none"/>
+        <circle cx="70" cy="100" r="5" stroke="#AEC5CC" stroke-width="2" fill="none"/>
+      </svg>
+
       <!-- Minimalist flower SVG -->
       <svg class="flower-svg" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M90 280 C 80 180, 100 100, 100 80" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
