@@ -211,7 +211,9 @@
        BOTTOM LEFT: One Horizontal Photo
        ========================================= */
     .bottom-left {
-      height: 240px;
+      display: flex;
+      gap: 15px;
+      height: 300px;
       animation: slideFadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
       animation-delay: 0.5s;
     }
@@ -650,9 +652,13 @@
 
     <!-- BOTTOM LEFT QUADRANT -->
     <div class="bottom-left">
-      <div class="photo-frame-horz">
+      <div class="photo-frame-vert">
         <div class="placeholder">Foto 3</div>
         <img src="foto3.png" alt="Memory 3" onerror="this.style.display='none'">
+      </div>
+      <div class="photo-frame-vert">
+        <div class="placeholder">Foto 4</div>
+        <img src="foto4.jpg" alt="Memory 4" onerror="this.style.display='none'">
       </div>
     </div>
 
