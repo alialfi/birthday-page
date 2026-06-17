@@ -42,6 +42,11 @@
       gap: 30px;
     }
 
+    @keyframes slideFadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* =========================================
        TOP LEFT: Flower, Palette, "26th's Birthday" 
        ========================================= */
@@ -51,6 +56,8 @@
       flex-direction: column;
       justify-content: flex-end;
       padding-bottom: 20px;
+      animation: slideFadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+      animation-delay: 0.1s;
     }
 
     /* Minimalist flower illustration */
@@ -131,15 +138,49 @@
       display: flex;
       gap: 15px;
       height: 300px;
+      animation: slideFadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+      animation-delay: 0.3s;
     }
 
     .photo-frame-vert {
       flex: 1;
       height: 100%;
-      background-color: #f0f0f0;
-      border-radius: 4px;
-      overflow: hidden;
+      background-color: #fff;
+      padding: 10px 10px 35px 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       position: relative;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .photo-frame-vert:hover {
+      transform: scale(1.05) rotate(-2deg);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+
+    /* Washi Tape */
+    .photo-frame-vert::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      margin-left: -25px;
+      width: 50px;
+      height: 20px;
+      background: rgba(245, 245, 245, 0.8);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transform: rotate(-3deg);
+      z-index: 5;
+    }
+    
+    .photo-frame-vert:nth-child(2)::after {
+      transform: rotate(4deg);
+      background: rgba(230, 230, 230, 0.7);
+    }
+
+    .photo-frame-vert:nth-child(2):hover {
+      transform: scale(1.05) rotate(2deg);
     }
 
     .photo-frame-vert img {
@@ -147,12 +188,13 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      background-color: #f0f0f0;
     }
 
     /* Placeholder if image is missing */
     .placeholder {
       position: absolute;
-      inset: 0;
+      inset: 10px 10px 35px 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -168,15 +210,39 @@
        ========================================= */
     .bottom-left {
       height: 240px;
+      animation: slideFadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+      animation-delay: 0.5s;
     }
 
     .photo-frame-horz {
       width: 100%;
       height: 100%;
-      background-color: #f0f0f0;
-      border-radius: 4px;
-      overflow: hidden;
+      background-color: #fff;
+      padding: 10px 10px 35px 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       position: relative;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .photo-frame-horz:hover {
+      transform: scale(1.03) rotate(1deg);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+
+    .photo-frame-horz::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      margin-left: -35px;
+      width: 70px;
+      height: 20px;
+      background: rgba(245, 245, 245, 0.7);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transform: rotate(2deg);
+      z-index: 5;
     }
 
     .photo-frame-horz img {
@@ -184,6 +250,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      background-color: #f0f0f0;
     }
 
     /* =========================================
@@ -194,6 +261,8 @@
       flex-direction: column;
       justify-content: center;
       padding-left: 20px;
+      animation: slideFadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+      animation-delay: 0.7s;
     }
 
     .main-title {
