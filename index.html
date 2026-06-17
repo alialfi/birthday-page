@@ -410,47 +410,136 @@
       background: #e0e0e0;
     }
 
-    .wish-card {
+    /* ===== ENVELOPE MODAL ===== */
+    .env-wrapper {
+      position: relative;
+      width: 340px;
+      height: 220px;
+      margin: auto;
+      margin-top: 15vh;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .env-wrapper.open { cursor: default; }
+
+    .env-back {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: #d1bfae;
+      border-radius: 4px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+
+    /* The Letter */
+    .env-letter {
+      position: absolute;
+      top: 10px; left: 10px; right: 10px;
       background: #fff;
-      border-radius: 16px;
-      padding: 40px;
+      border-radius: 4px;
+      padding: 30px 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 1;
+      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      max-height: 200px;
+      overflow: hidden;
       text-align: center;
-      opacity: 0;
-      transform: translateY(30px) scale(0.95);
-      transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
 
-    .wish-card.show {
-      opacity: 1;
-      transform: translateY(0) scale(1);
+    .env-wrapper.open .env-letter {
+      transform: translateY(-220px);
+      z-index: 5;
+      max-height: 800px;
+      padding-bottom: 40px;
+      cursor: auto;
     }
 
-    .wish-title {
-      font-family: 'Caveat', cursive;
-      font-size: 42px;
-      color: #333;
-      margin-bottom: 20px;
-      line-height: 1;
+    /* Flaps */
+    .env-front {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 2;
+      pointer-events: none;
     }
 
-    .wish-body {
-      font-size: 15px;
+    .env-front::before, .env-front::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 0; height: 0;
+    }
+    .env-front::before {
+      left: 0;
+      border-left: 170px solid #e0cdbb;
+      border-top: 110px solid transparent;
+      border-bottom: 110px solid #e0cdbb;
+    }
+    .env-front::after {
+      right: 0;
+      border-right: 170px solid #e0cdbb;
+      border-top: 110px solid transparent;
+      border-bottom: 110px solid #e0cdbb;
+    }
+
+    .env-bottom {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 0;
+      border-left: 170px solid transparent;
+      border-right: 170px solid transparent;
+      border-bottom: 130px solid #ebd8c5;
+      z-index: 3;
+    }
+
+    .env-top {
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 0;
+      border-left: 170px solid transparent;
+      border-right: 170px solid transparent;
+      border-top: 130px solid #c9b4a1;
+      z-index: 4;
+      transform-origin: top;
+      transition: transform 0.6s ease;
+    }
+
+    .env-wrapper.open .env-top {
+      transform: rotateX(180deg);
+      z-index: 0;
+    }
+
+    .env-hint {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 6;
+      background: rgba(255,255,255,0.85);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
       color: #555;
-      line-height: 1.8;
-      margin-bottom: 30px;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .env-wrapper.open .env-hint { opacity: 0; }
+
+    /* Close button on letter */
+    .close-letter-btn {
+      position: absolute;
+      top: 10px; right: 15px;
+      background: none; border: none; font-size: 20px; cursor: pointer; color: #aaa;
+      display: none;
+    }
+    .env-wrapper.open .close-letter-btn {
+      display: block;
     }
 
-    .wish-body strong {
-      color: #333;
-      font-weight: 600;
-    }
-
-    .wish-sign {
-      font-family: 'Caveat', cursive;
-      font-size: 32px;
-      color: #7ec1d4;
-    }
+    /* Wish Typography inside Letter */
+    .wish-title { font-family: 'Caveat', cursive; font-size: 30px; color: #333; margin-bottom: 15px; }
+    .wish-body { font-size: 12.5px; color: #555; line-height: 1.6; margin-bottom: 20px; text-align: left; }
+    .wish-sign { font-family: 'Caveat', cursive; font-size: 26px; color: #7ec1d4; }
   </style>
 </head>
 <body>
@@ -578,17 +667,24 @@
   <!-- WISHES OVERLAY -->
   <div class="overlay" id="overlay">
     <div class="overlay-content">
-      <div class="wish-card" id="wishCard">
-        <button class="close-btn" onclick="closeWishes()">✕</button>
+      <!-- Envelope Wrapper -->
+      <div class="env-wrapper" id="envWrapper" onclick="openEnvelope()">
+        <div class="env-back"></div>
         
-        <h2 class="wish-title">Happy 26th, Sayang! 🎉</h2>
-        
-        <p class="wish-body">
-          Selamat ulang tahun, sayang! Meskipun hari ini kita terpisah oleh jarak dan tidak bisa merayakannya bersama secara langsung, rinduku dan doaku tidak pernah berkurang untukmu. Semoga di usiamu yang baru ini, kamu selalu diberikan kesehatan, kebahagiaan, dan kemudahan dalam segala urusan. Aku sangat bersyukur memiliki kamu di hidupku, dan jarak ini justru membuatku makin menyadari betapa berharganya setiap momen bersamamu.<br><br>
-          Di hari spesialmu ini, aku juga ingin meminta maaf atas segala kekuranganku, sayang. Maaf karena jarak ini sering kali membuatku tidak peka, kurang perhatian, atau bahkan membuatmu kesal karena komunikasi kita yang kadang terhambat. Terima kasih ya sudah begitu sabar menghadapiku dan tetap menjaga komitmen ini bersama-sama. Happy birthday, sayang, semoga kita bisa segera bertemu!
-        </p>
-        
-        <div class="wish-sign">I love you! ❤️</div>
+        <div class="env-letter" onclick="event.stopPropagation()">
+          <button class="close-letter-btn" onclick="closeWishes(event)">✕</button>
+          <h2 class="wish-title">Happy 26th, Sayang! 🎉</h2>
+          <p class="wish-body">
+            Selamat ulang tahun, sayang! Meskipun hari ini kita terpisah oleh jarak dan tidak bisa merayakannya bersama secara langsung, rinduku dan doaku tidak pernah berkurang untukmu. Semoga di usiamu yang baru ini, kamu selalu diberikan kesehatan, kebahagiaan, dan kemudahan dalam segala urusan. Aku sangat bersyukur memiliki kamu di hidupku, dan jarak ini justru membuatku makin menyadari betapa berharganya setiap momen bersamamu.<br><br>
+            Di hari spesialmu ini, aku juga ingin meminta maaf atas segala kekuranganku, sayang. Maaf karena jarak ini sering kali membuatku tidak peka, kurang perhatian, atau bahkan membuatmu kesal karena komunikasi kita yang kadang terhambat. Terima kasih ya sudah begitu sabar menghadapiku dan tetap menjaga komitmen ini bersama-sama. Happy birthday, sayang, semoga kita bisa segera bertemu!
+          </p>
+          <div class="wish-sign">I love you! ❤️</div>
+        </div>
+
+        <div class="env-front"></div>
+        <div class="env-bottom"></div>
+        <div class="env-top"></div>
+        <div class="env-hint">Klik amplop 💌</div>
       </div>
     </div>
   </div>
@@ -598,21 +694,25 @@
       const overlay = document.getElementById('overlay');
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
-
-      // Slight delay for the scale/fade up animation
-      setTimeout(() => {
-        document.getElementById('wishCard').classList.add('show');
-      }, 50);
+      // Reset envelope to closed state
+      document.getElementById('envWrapper').classList.remove('open');
     }
 
-    function closeWishes() {
-      document.getElementById('wishCard').classList.remove('show');
+    function openEnvelope() {
+      document.getElementById('envWrapper').classList.add('open');
+    }
+
+    function closeWishes(e) {
+      if (e) e.stopPropagation(); // prevent envelope click
       
-      // Wait for animation to finish before hiding overlay
+      // Animate envelope closing first
+      document.getElementById('envWrapper').classList.remove('open');
+      
+      // Wait for letter to slide back down before hiding overlay
       setTimeout(() => {
         document.getElementById('overlay').classList.remove('active');
         document.body.style.overflow = '';
-      }, 400);
+      }, 600);
     }
 
     // Close on escape key
